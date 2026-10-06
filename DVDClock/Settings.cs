@@ -9,6 +9,7 @@ namespace DVDClock
     {
         public int SpeedIndex { get; set; } = 2; // 0 = Muito lenta, 1 = Lenta, 2 = Normal, 3 = Rápida, 4 = Muito rápida
         public string ClockColorHex { get; set; } = "#FFFFFF";
+        public bool FlickerEnabled { get; set; } = false;
 
         public static string SettingsPath => Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),

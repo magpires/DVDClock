@@ -42,6 +42,7 @@ namespace DVDClock
         private SizeF _textSize;
         
         private Random _random = new Random();
+        private bool _flickerVisible = true; // toggles every tick when flicker is enabled
 
         public ScreensaverForm(Rectangle bounds)
         {
@@ -118,6 +119,9 @@ namespace DVDClock
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
+            if (_settings.FlickerEnabled)
+                _flickerVisible = !_flickerVisible;
+
             UpdateTimeString();
 
             _x += _dx;
@@ -151,6 +155,7 @@ namespace DVDClock
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
+            if (!_flickerVisible) return;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
             e.Graphics.DrawString(_timeString, _clockFont, _clockBrush, _x, _y);
         }

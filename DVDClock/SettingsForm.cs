@@ -10,6 +10,7 @@ namespace DVDClock
         private ComboBox _cmbSpeed;
         private Button _btnColor;
         private Label _lblPreview;
+        private CheckBox _chkFlicker;
         private Button _btnSave;
         private Button _btnCancel;
 
@@ -23,7 +24,7 @@ namespace DVDClock
         private void InitializeComponent()
         {
             this.Text = "Configurações do DVDClock";
-            this.Size = new Size(350, 250);
+            this.Size = new Size(350, 295);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -58,10 +59,18 @@ namespace DVDClock
                 Font = new Font("Segoe UI Light", 24)
             };
 
-            _btnSave = new Button { Text = "Salvar", Location = new Point(140, 170), Width = 75 };
+            _chkFlicker = new CheckBox
+            {
+                Text = "Ativar flicker (piscar)",
+                Location = new Point(20, 165),
+                AutoSize = true,
+                Checked = _settings.FlickerEnabled
+            };
+
+            _btnSave = new Button { Text = "Salvar", Location = new Point(140, 215), Width = 75 };
             _btnSave.Click += BtnSave_Click;
             
-            _btnCancel = new Button { Text = "Cancelar", Location = new Point(225, 170), Width = 75 };
+            _btnCancel = new Button { Text = "Cancelar", Location = new Point(225, 215), Width = 75 };
             _btnCancel.Click += (s, e) => this.Close();
 
             this.Controls.Add(lblSpeed);
@@ -69,6 +78,7 @@ namespace DVDClock
             this.Controls.Add(lblColor);
             this.Controls.Add(_btnColor);
             this.Controls.Add(_lblPreview);
+            this.Controls.Add(_chkFlicker);
             this.Controls.Add(_btnSave);
             this.Controls.Add(_btnCancel);
         }
@@ -92,6 +102,7 @@ namespace DVDClock
         private void BtnSave_Click(object? sender, EventArgs e)
         {
             _settings.SpeedIndex = _cmbSpeed.SelectedIndex;
+            _settings.FlickerEnabled = _chkFlicker.Checked;
             _settings.Save();
             this.Close();
         }
